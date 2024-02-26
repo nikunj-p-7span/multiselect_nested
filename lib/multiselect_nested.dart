@@ -471,56 +471,56 @@ class _MultiSelectNestedState extends State<MultiSelectNested> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          padding: const EdgeInsets.all(8),
-          child: Stack(
-            children: [
-              Container(
-                color: widget.selectedItemsRowColor,
-                child: Padding(
-                  padding: widget.paddingSelectedItems,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: _localSelectedOptions.isNotEmpty
-                            ? Wrap(
-                                spacing: 10.0,
-                                runSpacing: 8.0,
-                                children: _localSelectedOptions
-                                    .map(
-                                      (item) => SelectedValueItem(
-                                        label: item.name,
-                                        gestureTapCallback: () =>
-                                            removeSelectedItem(item.name),
-                                        backgroundColor:
-                                            widget.selectedItemColor,
-                                        dividerColor:
-                                            widget.selectedItemDividerColor,
-                                      ),
-                                    )
-                                    .toList(),
-                              )
-                            : Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                  widget.noItemsText,
-                                  style: widget.noItemsTextStyle,
-                                ),
-                            ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          expandContainer();
-                        },
-                        child: isExpanded
+        GestureDetector(
+          onTap: (){
+            expandContainer();
+          },
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            child: Stack(
+              children: [
+                Container(
+                  color: widget.selectedItemsRowColor,
+                  child: Padding(
+                    padding: widget.paddingSelectedItems,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: _localSelectedOptions.isNotEmpty
+                              ? Wrap(
+                                  spacing: 10.0,
+                                  runSpacing: 8.0,
+                                  children: _localSelectedOptions
+                                      .map(
+                                        (item) => SelectedValueItem(
+                                          label: item.name,
+                                          gestureTapCallback: () =>
+                                              removeSelectedItem(item.name),
+                                          backgroundColor:
+                                              widget.selectedItemColor,
+                                          dividerColor:
+                                              widget.selectedItemDividerColor,
+                                        ),
+                                      )
+                                      .toList(),
+                                )
+                              : Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                    widget.noItemsText,
+                                    style: widget.noItemsTextStyle,
+                                  ),
+                              ),
+                        ),
+                        isExpanded
                             ? const Icon(Icons.arrow_drop_up,color: Colors.white,)
                             : const Icon(Icons.arrow_drop_down,color: Colors.white,),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         _getDropdownContainer(),
