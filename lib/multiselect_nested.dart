@@ -305,6 +305,7 @@ class _MultiSelectNestedState extends State<MultiSelectNested> {
 
       if (isParentSelected == null &&
           !_checkedParent.contains(selectedParent)) {
+        selectedParent?.children = [];
         _checkedParent.add(selectedParent!);
       } else {
         List<MultiSelectNestedItem> parentChild = selectedParent!.children;
