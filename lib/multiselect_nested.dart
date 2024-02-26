@@ -517,8 +517,8 @@ class _MultiSelectNestedState extends State<MultiSelectNested> {
                           expandContainer();
                         },
                         child: isExpanded
-                            ? const Icon(Icons.arrow_drop_up)
-                            : const Icon(Icons.arrow_drop_down),
+                            ? const Icon(Icons.arrow_drop_up,color: Colors.white,)
+                            : const Icon(Icons.arrow_drop_down,color: Colors.white,),
                       ),
                     ],
                   ),
