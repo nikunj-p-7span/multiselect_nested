@@ -475,7 +475,6 @@ class _MultiSelectNestedState extends State<MultiSelectNested> {
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
               border: Border.all(
-            color: Colors.white,
           ),),
           child: Stack(
             children: [
