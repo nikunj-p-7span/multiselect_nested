@@ -472,10 +472,11 @@ class _MultiSelectNestedState extends State<MultiSelectNested> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
+          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
               border: Border.all(
-            color: MultiSelectNestedColors.PRIMARY_LIGHT_COLOR,
-          )),
+            color: Colors.white,
+          ),),
           child: Stack(
             children: [
               Container(
