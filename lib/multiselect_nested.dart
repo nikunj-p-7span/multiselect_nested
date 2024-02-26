@@ -295,35 +295,43 @@ class _MultiSelectNestedState extends State<MultiSelectNested> {
         for (MultiSelectNestedItem children in parent.children) {
           if (item.id == children.id) {
             selectedParent = parent;
-            break; // Stop searching once the parent is found
           }
-        }
-        if (selectedParent != null) {
-          break; // Stop searching once the parent is found
         }
       }
 
-      // Check if the selected item is a child
-      if (selectedParent == null) {
-        // Remove any previously selected parent if a child is selected
-        _checkedParent.clear();
-        // Add the selected child to the list of selected items
-        _localSelectedOptions.add(item);
-      } else {
-        // Remove the selected child if a parent is selected
-        _localSelectedOptions.remove(item);
+      MultiSelectNestedItem? isParentSelected = _localSelectedOptions
+          .firstWhereOrNull((MultiSelectNestedItem element) =>
+              element.id == selectedParent!.id);
 
-        // If the parent is not already in the list of checked parents, add it
-        if (!_checkedParent.contains(selectedParent)) {
-          _checkedParent.add(selectedParent);
-        } else {
-          // If the parent is already in the list of checked parents, remove it
+      if (isParentSelected == null &&
+          !_checkedParent.contains(selectedParent)) {
+        _checkedParent.add(selectedParent!);
+      } else {
+        List<MultiSelectNestedItem> parentChild = selectedParent!.children;
+        bool isPresent = false;
+        int childPresent = 0;
+        for (MultiSelectNestedItem child in parentChild) {
+          if (_localSelectedOptions.contains(child)) {
+            isPresent = true;
+            childPresent += 1;
+          }
+        }
+        if (!isPresent) {
           _checkedParent.remove(selectedParent);
         }
+        if (childPresent == parentChild.length) {
+          _checkedParent.remove(selectedParent);
+          _localSelectedOptions.add(selectedParent);
+        }
+        if (childPresent > 0 && childPresent < parentChild.length) {
+          _checkedParent.add(selectedParent);
+          _localSelectedOptions.remove(selectedParent);
+        }
+
+        childPresent = 0;
       }
     }
   }
-
 
   List<Widget> _buildContentDropdown(
       List<MultiSelectNestedItem> options, int level) {
