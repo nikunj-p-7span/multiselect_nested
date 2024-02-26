@@ -288,29 +288,38 @@ class _MultiSelectNestedState extends State<MultiSelectNested> {
     updateValues();
   }
 
-  void _checkParentSelected(MultiSelectNestedItem item, int level) {
+  _checkParentSelected(MultiSelectNestedItem item, int level) {
     if (level > 0) {
       MultiSelectNestedItem? selectedParent;
-      // Find the parent of the given item
       for (MultiSelectNestedItem parent in widget.options) {
-        for (MultiSelectNestedItem child in parent.children) {
-          if (item.id == child.id) {
+        for (MultiSelectNestedItem children in parent.children) {
+          if (item.id == children.id) {
             selectedParent = parent;
-            break; // Found the parent, no need to continue looping
+            break; // Stop searching once the parent is found
           }
         }
         if (selectedParent != null) {
-          break; // Found the parent, no need to continue looping
+          break; // Stop searching once the parent is found
         }
       }
 
-      if (selectedParent != null) {
-        // Clear all checked parents and add the selected parent
+      // Check if the selected item is a child
+      if (selectedParent == null) {
+        // Remove any previously selected parent if a child is selected
         _checkedParent.clear();
-        _checkedParent.add(selectedParent);
-        // Clear all local selected options and add the selected parent
-        _localSelectedOptions.clear();
-        _localSelectedOptions.add(selectedParent);
+        // Add the selected child to the list of selected items
+        _localSelectedOptions.add(item);
+      } else {
+        // Remove the selected child if a parent is selected
+        _localSelectedOptions.remove(item);
+
+        // If the parent is not already in the list of checked parents, add it
+        if (!_checkedParent.contains(selectedParent)) {
+          _checkedParent.add(selectedParent);
+        } else {
+          // If the parent is already in the list of checked parents, remove it
+          _checkedParent.remove(selectedParent);
+        }
       }
     }
   }
