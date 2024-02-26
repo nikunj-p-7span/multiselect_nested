@@ -340,7 +340,7 @@ class _MultiSelectNestedState extends State<MultiSelectNested> {
         return Padding(
           padding: EdgeInsets.only(left: level * 10),
           child: ExpansionTile(
-            tilePadding: const EdgeInsets.all(0),
+            tilePadding: const EdgeInsets.all(8),
             iconColor: widget.collapsedIconColor,
             leading: Stack(
               children: [
