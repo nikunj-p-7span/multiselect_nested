@@ -301,7 +301,7 @@ class _MultiSelectNestedState extends State<MultiSelectNested> {
 
       MultiSelectNestedItem? isParentSelected = _localSelectedOptions
           .firstWhereOrNull((MultiSelectNestedItem element) =>
-              element.id == selectedParent!.id);
+      element.id == selectedParent!.id);
 
       if (isParentSelected == null &&
           !_checkedParent.contains(selectedParent)) {
