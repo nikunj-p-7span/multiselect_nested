@@ -504,10 +504,13 @@ class _MultiSelectNestedState extends State<MultiSelectNested> {
                                     )
                                     .toList(),
                               )
-                            : Text(
-                                widget.noItemsText,
-                                style: widget.noItemsTextStyle,
-                              ),
+                            : Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                  widget.noItemsText,
+                                  style: widget.noItemsTextStyle,
+                                ),
+                            ),
                       ),
                       InkWell(
                         onTap: () {
