@@ -288,50 +288,33 @@ class _MultiSelectNestedState extends State<MultiSelectNested> {
     updateValues();
   }
 
-  _checkParentSelected(MultiSelectNestedItem item, int level) {
+  void _checkParentSelected(MultiSelectNestedItem item, int level) {
     if (level > 0) {
       MultiSelectNestedItem? selectedParent;
+      // Find the parent of the given item
       for (MultiSelectNestedItem parent in widget.options) {
-        for (MultiSelectNestedItem children in parent.children) {
-          if (item.id == children.id) {
+        for (MultiSelectNestedItem child in parent.children) {
+          if (item.id == child.id) {
             selectedParent = parent;
+            break; // Found the parent, no need to continue looping
           }
+        }
+        if (selectedParent != null) {
+          break; // Found the parent, no need to continue looping
         }
       }
 
-      MultiSelectNestedItem? isParentSelected = _localSelectedOptions
-          .firstWhereOrNull((MultiSelectNestedItem element) =>
-              element.id == selectedParent!.id);
-
-      if (isParentSelected == null &&
-          !_checkedParent.contains(selectedParent)) {
-        _checkedParent.add(selectedParent!);
-      } else {
-        List<MultiSelectNestedItem> parentChild = selectedParent!.children;
-        bool isPresent = false;
-        int childPresent = 0;
-        for (MultiSelectNestedItem child in parentChild) {
-          if (_localSelectedOptions.contains(child)) {
-            isPresent = true;
-            childPresent += 1;
-          }
-        }
-        if (!isPresent) {
-          _checkedParent.remove(selectedParent);
-        }
-        if (childPresent == parentChild.length) {
-          _checkedParent.remove(selectedParent);
-          _localSelectedOptions.add(selectedParent);
-        }
-        if (childPresent > 0 && childPresent < parentChild.length) {
-          _checkedParent.add(selectedParent);
-          _localSelectedOptions.remove(selectedParent);
-        }
-
-        childPresent = 0;
+      if (selectedParent != null) {
+        // Clear all checked parents and add the selected parent
+        _checkedParent.clear();
+        _checkedParent.add(selectedParent);
+        // Clear all local selected options and add the selected parent
+        _localSelectedOptions.clear();
+        _localSelectedOptions.add(selectedParent);
       }
     }
   }
+
 
   List<Widget> _buildContentDropdown(
       List<MultiSelectNestedItem> options, int level) {
